@@ -61,7 +61,7 @@ class Gradebook:
         if type(student) == str:    
             names_list = self.gradebook['Name'].tolist()
             if student in names_list:
-                print(f'{student} is already in gradebook.')
+                print(f'{student} is already in the gradebook.')
             else:
                 columns = len(self.gradebook.columns)
                 finale = []
@@ -75,7 +75,7 @@ class Gradebook:
         elif type(student) == Student:
             names_list = self.gradebook['Name'].tolist()
             if student.name in names_list:
-                print(f'{student.name} is already in gradebook.')
+                print(f'{student.name} is already in the gradebook.')
             else:
                 columns = len(self.gradebook.columns)
                 finale = []
@@ -100,7 +100,7 @@ class Gradebook:
         self.gradebook.to_csv('testing.csv', sep=',', index=False)
 
 
-    def add_grade(self, student, assignment:str, grade:int): # works with dataframe. str or Student for student input
+    def add_grade(self, student, assignment:str, grade:int): # works with dataframe. string or Student object for student input
         if type(student) == str:
             student_index = self.gradebook.index[self.gradebook['Name'] == student].tolist()
             short_index = student_index[0]
@@ -134,33 +134,27 @@ pandas_test.add_student('Jena')
 jocelyn = Student('Jocelyn', 20, readLevel=12)
 pandas_test.add_student(jocelyn)
 
-# def main(gradebook):
-#     a = input('What would you like to do? View gradebook, view student grades, add student, or add grades?: ')
-#     if a == 'view gradebook':
-#         for item in gradebook.gradebook.items():
-#             print(item)
-#     elif a == 'view student grades' or a == 'view student grade' or a == 'view student':
-#         b = input('Which student\'s grades would you like to view?: ')
-#         try:
-#             print(gradebook.gradebook[b])
-#         except:
-#             print('That student doesn\'t exist in this gradebook.')
-        
-#     elif a == 'add student':
-#         name = input('Now I will collect some information about your new student. First, what\'s your student\'s name?: ')
-#         age = int(input(f'How old is {name}?: '))
-#         lvl = int(input(f'What grade is {name}\'s reading level?: '))
-#         new_student = Student(name, age, readLevel = lvl)
-#         gradebook.add_student(new_student)
-#         print("Your new student has successfully been added to the gradebook :)")
-#         print(gradebook.gradebook)
-#     elif a =='add grades':
-#         name = input('Which student would you like to add grades for?: ')
-#         assignment = input(f'Which one of {name}\'s assignments are you inputting?: ')
-#         grade = int(input(f'What grade did {name} recieve on that assignment?: '))
-#         gradebook.add_grade(name, assignment, grade)
-#         print('Perfect, your grade has been added.')
-#         print(gradebook.gradebook)
-#     else:
-#         print('You did not enter a valid input. Please try again.')
-# main(test_gradebook)
+def main(gradebook:Gradebook):
+    a = input('What would you like to do? View gradebook, view student grades, add student, or add grades?: ')
+    if a == 'view gradebook':
+        print(gradebook)
+    elif a == 'view student grades' or a == 'view student grade' or a == 'view student':
+        b = input('Which student\'s grades would you like to view?: ')
+        print(gradebook.gradebook.loc[gradebook.gradebook['Name'] == b])
+    elif a == 'add student':
+        name = input('Now I will collect some information about your new student. First, what\'s your student\'s name?: ')
+        name = name.capitalize()
+        age = int(input(f'How old is {name}?: '))
+        lvl = int(input(f'What grade is {name}\'s reading level?: '))
+        new_student = Student(name, age, readLevel = lvl)
+        gradebook.add_student(new_student)
+    elif a =='add grades':
+        name = input('Which student would you like to add grades for?: ')
+        assignment = input(f'Which one of {name}\'s assignments are you inputting?: ')
+        grade = int(input(f'What grade did {name} recieve on that assignment?: '))
+        gradebook.add_grade(name, assignment, grade)
+        print('Perfect, your grade has been added.')
+        print(gradebook.gradebook)
+    else:
+        print('You did not enter a valid input. Please try again.')
+main(pandas_test)
