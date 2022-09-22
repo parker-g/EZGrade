@@ -38,7 +38,7 @@ class SpedStudent(Student):
         print(f"{self.name} has the following accomodations listed: {accomodations}")
 
 jefferey = SpedStudent('Jefferey', 22, readLevel=9)
-jefferey.add_accomodations('Needs a blankey', 'Prefers to listen to music with headphones while working')
+jefferey.add_accomodations('Needs a blanket', 'Prefers to listen to music with headphones while working')
 
 jessica =Student('Jessica', age=7, birthday=datetime.date(2015, 4, 21))
 jessica.add_grade('Project one', 85)
@@ -46,18 +46,20 @@ parker = Student('Parker', 21, datetime.date(2000, 9, 9), 12)
 parker.add_grade('Coding Assingment 1', 100)
 
 # self.gradebook is a dataframe table with names as y-axis values and assignment names as x-axis values. 
-class Gradebook:
+class Gradebook: # kinda want to accept dictionaries too. idk how practical that would be tho in real world
     def __init__(self, grades_info):
         if type(grades_info) == str:
             df = pd.read_csv(grades_info)
             self.gradebook = df
-        elif type(grades_info) == dict:
-            self.gradebook = grades_info
+        else:
+            raise TypeError('Gradebook objects\'s __init__ takes a csv file path as an argument.')
+        # elif type(grades_info) == dict:
+        #     self.gradebook = grades_info
 
     def __repr__(self):
         return str(self.gradebook.head(15))
 
-    def add_student(self, student): # works with dataframe
+    def add_student(self, student): # adds a student to df with 0's for every assignment
         if type(student) == str:    
             names_list = self.gradebook['Name'].tolist()
             if student in names_list:
@@ -72,7 +74,8 @@ class Gradebook:
                 print(f'Adding student {student} to gradebook.')
                 self.gradebook.loc[len(self.gradebook.index)] = finale
                 self.gradebook.to_csv('testing.csv', index=False, sep=',')
-        elif type(student) == Student:
+        elif type(student) == Student: # wanna modify this so if a Student object has a dictionary of assignment:grade pairs, 
+            # they will be automatically added to gradebook. 
             names_list = self.gradebook['Name'].tolist()
             if student.name in names_list:
                 print(f'{student.name} is already in the gradebook.')
@@ -99,7 +102,7 @@ class Gradebook:
             )
         self.gradebook.to_csv('testing.csv', sep=',', index=False)
 
-
+# can definitely refactor this a bit
     def add_grade(self, student, assignment:str, grade:int): # works with dataframe. string or Student object for student input
         if type(student) == str:
             student_index = self.gradebook.index[self.gradebook['Name'] == student].tolist()
@@ -119,14 +122,6 @@ class Gradebook:
 
 
 #control+D to select next occurence of a highlighted word/number/character(s)
-test_gradebook = Gradebook('grades.csv')
-# print(test_gradebook.gradebook)
-# test_gradebook.add_student(jessica)
-
-# test_gradebook.add_grade('Garnett', 'Writing Project', 79)
-# test_gradebook.add_grade('Connell', 'Art Project', 90)
-# test_gradebook.add_grade('Moeen', 'Valorant Project', 85)
-# test_gradebook.add_grade('Lisa Lisa', 'Hamon Exercise', 99)
 
 pandas_test = Gradebook('testing.csv')
 # pandas_test.add_grade('Garrett', 'Project 2', 85)
