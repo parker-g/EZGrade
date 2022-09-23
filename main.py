@@ -125,9 +125,8 @@ class Gradebook: # kinda want to accept dictionaries too. idk how practical that
 
 pandas_test = Gradebook('testing.csv')
 # pandas_test.add_grade('Garrett', 'Project 2', 85)
-pandas_test.add_student('Jena')
 jocelyn = Student('Jocelyn', 20, readLevel=12)
-pandas_test.add_student(jocelyn)
+
 
 def main(gradebook:Gradebook):
     a = input('What would you like to do? View gradebook, view student grades, add student, or add grades?: ')
@@ -139,6 +138,9 @@ def main(gradebook:Gradebook):
     elif a == 'add student':
         name = input('Now I will collect some information about your new student. First, what\'s your student\'s name?: ')
         name = name.capitalize()
+        if name in gradebook.gradebook['Name'].values:
+            print(f'{name} is already in gradebook.')
+            return
         age = int(input(f'How old is {name}?: '))
         lvl = int(input(f'What grade is {name}\'s reading level?: '))
         new_student = Student(name, age, readLevel = lvl)
