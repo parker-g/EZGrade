@@ -10,7 +10,9 @@
 
 <body>
     <h1>Welcome To EZ-Grade!</h1>
-    <p>{{content}}</p>
+    {% for x in content %}
+    <p>{{x}}</p>
+    {% endfor %}
 </body>
 
 </html>
