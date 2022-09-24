@@ -3,10 +3,11 @@ import pandas as pd
 from results import write_results
 
 # future features 
-# DONE - ability to view gradebook in graph or excel format
+# Front end GUI
+# Python web framework ie. flask / django
 # ability to input picture of student's assignment
-# GUI
-# IMPLEMENTING - want each student to easily store multiple assignments (might not have to make adjustments for this.) - can be solved with pandas
+# DONE - ability to view gradebook in graph or excel format
+# DONE - want each student to easily store multiple assignments (might not have to make adjustments for this.) - changed to pandas for data instead of dictionaries
 
 class Student:
     def __init__(self, name, age=None, birthday=None, readLevel=None):
