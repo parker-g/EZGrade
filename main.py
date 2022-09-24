@@ -1,6 +1,4 @@
 import datetime
-import csv
-import os
 import pandas as pd
 from results import write_results
 
