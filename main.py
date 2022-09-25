@@ -2,6 +2,8 @@ import datetime
 import pandas as pd
 from results import write_results
 
+# use `pip3 freeze > requirements.txt` to create requirements list at specified file name
+
 # future features 
 # Front end GUI
 # Python web framework ie. flask / django
