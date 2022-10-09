@@ -3,12 +3,10 @@ from flask import Flask, redirect, url_for, render_template
 
 app = Flask(__name__)
 lst = ['Narm', 'Ebar', 'Gahnstemme']
+
 @app.route('/')
 def home():
     return render_template('index.html')
-
-
-
 
 
 @app.route("/<name>/") # can pass a string from URL as an argument through <name>. this name is then used in this function
